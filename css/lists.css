@@ -1,0 +1,56 @@
+.list-item {
+  background: var(--input-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 14px;
+  transition: all .2s;
+}
+.list-item:hover { border-color: var(--purple-hover); }
+.list-item.selected { border-color: var(--purple); box-shadow: 0 0 0 1px var(--purple-border); }
+
+.list-item-head { display: flex; align-items: center; gap: 12px; }
+.list-item-name { font-weight: 500; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list-item-you { font-size: 10px; color: var(--purple); font-weight: 400; }
+.list-item-birth { font-size: 12px; color: var(--text-faint); margin: 2px 0 0; }
+.list-item-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+.btn-chip {
+  font-size: 12px; padding: 6px 12px; border-radius: 8px; cursor: pointer; transition: all .2s;
+  border: 1px solid var(--border-strong); background: var(--card-bg); color: var(--text-muted);
+  white-space: nowrap;
+}
+.btn-chip:hover { border-color: var(--purple-hover); }
+.btn-chip-primary { flex: 1; background: var(--purple); color: #fff; border: none; box-shadow: 0 6px 16px var(--purple-soft); }
+.btn-chip-primary:hover { background: var(--purple-hover); }
+.btn-chip-danger:hover { border-color: var(--red); color: var(--red); }
+
+.group-item-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.group-item-name { font-weight: 500; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.group-item-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.group-item-members { display: flex; align-items: center; gap: 6px; margin-top: 6px; }
+.group-member-badge { font-size: 10px; background: var(--purple-soft); color: var(--purple); padding: 2px 6px; border-radius: 4px; font-weight: 500; }
+.group-member-list { font-size: 12px; color: var(--text-faint); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.notif-item {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--input-bg); border: 1px solid var(--purple-border);
+  border-radius: 12px; padding: 12px 14px; transition: transform .2s;
+}
+.notif-item:hover { transform: scale(1.01); }
+.notif-icon { font-size: 18px; }
+.notif-name { font-weight: 500; font-size: 14px; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.notif-date { font-size: 12px; color: var(--text-faint); margin: 0; }
+.notif-badge {
+  font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 8px; flex-shrink: 0;
+  background: var(--purple-soft); color: var(--purple); border: 1px solid var(--purple-border);
+}
+.notif-badge.today { background: var(--purple); color: #fff; box-shadow: 0 8px 20px var(--shadow-purple); border: none; }
+
+/* ==================== Wishlist items ==================== */
+.wish-item {
+  display: flex; align-items: center; gap: 10px;
+  background: var(--input-bg); border: 1px solid var(--border-strong);
+  border-radius: 8px; padding: 8px 12px;
+}
+.wish-item span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wish-icon { color: var(--purple); }

@@ -1,12 +1,10 @@
-class UserRepository {
+class UserRepository extends BaseRepository {
     constructor(storage) {
-        this.storage = storage;
-        this.tableName = 'users';
+        super(storage, 'users');
     }
 
     getAll(){
-        const rawData = this.storage.getTable(this.tableName);
-        return rawData.map(user => new User(user.id, user.name, user.birthday, user.email));
+        return this.getAllRaw().map(user => new User(user.id, user.name, user.birthday, user.email));
     }
 
     getById(id){

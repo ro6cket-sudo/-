@@ -1,19 +1,15 @@
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  min-height: 100vh;
-  -webkit-font-smoothing: antialiased;
-  transition: background-color .2s, color .2s;
-}
-button, input, select { font-family: inherit; }
-ul { list-style: none; margin: 0; padding: 0; }
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-hover); }
+/* ============ Патимейкер — базовые стили ============ */
 
-.hidden { display: none !important; }
-.text-faint { color: var(--text-faint); }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,sans-serif;
+  -webkit-font-smoothing:antialiased;letter-spacing:-.01em;transition:background-color .3s,color .3s;}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px}
+::-webkit-scrollbar-thumb:hover{background:var(--faint)}
+::-webkit-scrollbar-track{background:transparent}
+input,button,select{font-family:inherit;letter-spacing:inherit}
+button{cursor:pointer;color:inherit}
+.hidden{display:none!important}
+@keyframes pop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}

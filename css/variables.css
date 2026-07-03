@@ -1,44 +1,26 @@
-:root {
-  --bg: #F4F3F8;
-  --text: #0f172a;
-  --text-muted: #64748b;
-  --text-faint: #94a3b8;
-  --card-bg: #ffffff;
-  --border: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --input-bg: #f1f5f9;
-  --purple: #9333ea;
-  --purple-hover: #a855f7;
-  --purple-soft: rgba(147, 51, 234, .10);
-  --purple-soft-strong: rgba(147, 51, 234, .18);
-  --purple-border: rgba(147, 51, 234, .20);
-  --shadow-purple: rgba(147, 51, 234, .15);
-  --red: #ef4444;
-  --red-soft: rgba(239, 68, 68, .10);
-  --scrollbar: #d3cfe3;
-  --scrollbar-hover: #b3aacf;
-  --bubble-mine: var(--purple);
-  --bubble-theirs: #ffffff;
-}
+/* ============ Патимейкер — переменные темы ============ */
 
-html.dark {
-  --bg: #0B0A0F;
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-  --text-faint: #64748b;
-  --card-bg: #15131C;
-  --border: rgba(168, 85, 247, .10);
-  --border-strong: #1e293b;
-  --input-bg: #1E1B26;
-  --purple: #9333ea;
-  --purple-hover: #a855f7;
-  --purple-soft: rgba(147, 51, 234, .15);
-  --purple-soft-strong: rgba(147, 51, 234, .25);
-  --purple-border: rgba(168, 85, 247, .20);
-  --shadow-purple: rgba(147, 51, 234, .25);
-  --red: #f87171;
-  --red-soft: rgba(239, 68, 68, .15);
-  --scrollbar: #2d2a3a;
-  --scrollbar-hover: #4c3f6b;
-  --bubble-theirs: #221F2D;
+:root{
+  --bg:#FBFBFD; --card:#FFFFFF; --elev:#FFFFFF; --rail:#F2F2F5;
+  --text:#1D1D1F; --muted:#6E6E73; --faint:#A1A1A6;
+  --border:rgba(0,0,0,.08); --border-2:rgba(0,0,0,.12);
+  --fill:#F5F5F7; --fill-2:#ECECEF;
+  --accent:#7A5AF8; --accent-2:#6A46F5;
+  --accent-soft:rgba(122,90,248,.10); --accent-border:rgba(122,90,248,.24);
+  --on-accent:#FFFFFF;
+  --danger:#FF3B30; --danger-soft:rgba(255,59,48,.10);
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px rgba(0,0,0,.06);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.05);
+}
+html[data-theme="dark"]{
+  --bg:#0B0B0D; --card:#141416; --elev:#1C1C1E; --rail:#161618;
+  --text:#F5F5F7; --muted:#98989D; --faint:#5C5C61;
+  --border:rgba(255,255,255,.09); --border-2:rgba(255,255,255,.14);
+  --fill:#1C1C1E; --fill-2:#2C2C2E;
+  --accent:#9E86FF; --accent-2:#B29BFF;
+  --accent-soft:rgba(158,134,255,.14); --accent-border:rgba(158,134,255,.30);
+  --on-accent:#000000;
+  --danger:#FF453A; --danger-soft:rgba(255,69,58,.14);
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 16px 40px rgba(0,0,0,.5);
+  --shadow-sm:0 1px 2px rgba(0,0,0,.5);
 }

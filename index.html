@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<script>
+  if ((localStorage.getItem('theme') || 'dark') === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Патимейкер</title>
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/lists.css">
+<link rel="stylesheet" href="css/cards.css">
+</head>
+<body>
+
+<div class="app-layout">
+
+  <aside class="sidebar">
+
+    <div class="sidebar-logo">
+      <div class="logo-icon">🎂</div>
+      <div>
+        <h1 class="logo-title">Патимейкер</h1>
+        <p class="logo-subtitle">организация праздников</p>
+      </div>
+    </div>
+
+    <div>
+      <p class="section-label">Активный аккаунт</p>
+      <div class="account-row">
+        <button id="sidebarAvatar" class="avatar avatar-lg" onclick="openProfile()" title="Открыть мой профиль"></button>
+        <select id="userSwitcher" class="input select-user"></select>
+        <button class="btn-square btn-add" onclick="openAddUser()" title="Добавить нового пользователя">+</button>
+      </div>
+      <p class="hint-text">Нажмите на аватар чтобы открыть профиль</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="sidebar-groups">
+      <p class="section-label">Группы</p>
+      <div class="row-input">
+        <input id="newGroupName" class="input" placeholder="Новая группа..." onkeydown="if(event.key==='Enter') createGroup()">
+        <button class="btn-square btn-primary" onclick="createGroup()">+</button>
+      </div>
+      <div id="groupsList" class="stack"></div>
+    </div>
+
+    <button id="themeToggle" class="theme-toggle-btn" onclick="toggleTheme()"></button>
+
+  </aside>
+
+  <div id="sidebarResizer" class="sidebar-resizer" title="Потяните, чтобы изменить ширину"></div>
+
+  <main class="main-content">
+
+    <div class="mobile-header">
+      <div class="mobile-header-row">
+        <span class="mobile-logo">🎂 Birthday OS</span>
+        <div class="mobile-header-actions">
+          <select id="userSwitcherMobile" class="input"></select>
+          <button id="themeToggleMobile" class="btn-square btn-icon" onclick="toggleTheme()"></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+
+      <div class="col-left stack-lg">
+
+        <section class="card">
+          <h2 class="card-title"><span class="card-title-icon">🔔</span> Ближайшие дни рождения</h2>
+          <div id="notifications" class="stack notif-text">
+            <p class="text-faint">Загрузка...</p>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="card-title"><span class="card-title-icon">👥</span> Друзья</h2>
+          <div id="usersList" class="stack"></div>
+        </section>
+
+        <section class="card">
+          <h2 class="card-title"><span class="card-title-icon">🎁</span> Мой вишлист</h2>
+          <ul id="myWishlist" class="stack-sm wishlist-text"></ul>
+        </section>
+
+        <section class="card mobile-only">
+          <h2 class="card-title">🏢 Группы</h2>
+          <div id="groupsListMobile" class="stack"></div>
+        </section>
+
+      </div>
+
+      <div class="col-right">
+
+        <div id="emptyCard" class="empty-state">
+          <div class="empty-icon">🎈</div>
+          <h3 class="empty-title">Никто не выбран</h3>
+          <p class="empty-text">Выберите друга из списка, чтобы начать подготовку к празднику</p>
+        </div>
+
+        <section id="friendCard" class="card friend-card hidden">
+
+          <div class="card-header-gradient">
+            <div class="row gap-4">
+              <div id="fcAvatar" class="avatar avatar-xl"></div>
+              <div>
+                <h2 class="fc-name" id="fcName"></h2>
+                <p class="fc-birth">🎂 <span id="fcBirth"></span></p>
+              </div>
+            </div>
+            <button class="btn-close" onclick="closeCard()">&times;</button>
+          </div>
+
+          <div class="card-body">
+
+            <div class="stack-lg">
+              <div>
+                <p class="section-label">Состоит в группах</p>
+                <p id="fcGroups" class="fc-groups"></p>
+              </div>
+              <div>
+                <p class="section-label">🎁 Вишлист</p>
+                <ul id="fcWishlist" class="stack-sm wishlist-text"></ul>
+              </div>
+            </div>
+
+            <div id="chatBlock" class="chat-block">
+              <div class="chat-header">
+                <p class="section-label chat-label">🤫 Секретный чат <span class="chat-label-note">— именинник его не видит</span></p>
+                <button class="btn-close-small" onclick="clearChat()" title="Очистить чат">&times;</button>
+              </div>
+              <div id="chatMessages" class="chat-messages"></div>
+              <div class="row-input">
+                <input id="chatInput" class="input" placeholder="Сообщение..." onkeydown="if(event.key==='Enter') sendChat()">
+                <button class="btn-square btn-primary btn-send" onclick="sendChat()">➤</button>
+              </div>
+            </div>
+
+            <div id="chatForbidden" class="chat-forbidden hidden">
+              <span class="forbidden-icon">🚫</span>
+              <p class="forbidden-text">Это ваша собственная карточка — секретный чат от вас скрыт!</p>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="addUserModal" class="modal-overlay hidden">
+  <div class="modal-backdrop" onclick="closeAddUser()"></div>
+  <div class="modal-panel modal-sm">
+    <div class="modal-header">
+      <div>
+        <h2 class="modal-title">Новый пользователь</h2>
+        <p class="modal-subtitle">добавить аккаунт в систему</p>
+      </div>
+      <button class="btn-close" onclick="closeAddUser()">&times;</button>
+    </div>
+    <div class="modal-body stack-lg">
+      <div>
+        <label class="field-label">Имя *</label>
+        <input id="newUserName" type="text" class="input input-block" placeholder="Например: Саша" onkeydown="if(event.key==='Enter') submitAddUser()">
+      </div>
+      <div>
+        <label class="field-label">Дата рождения *</label>
+        <input id="newUserBirth" type="date" class="input input-block">
+      </div>
+      <div>
+        <label class="field-label">Email (необязательно)</label>
+        <input id="newUserEmail" type="email" class="input input-block" placeholder="email@example.com" onkeydown="if(event.key==='Enter') submitAddUser()">
+      </div>
+      <button class="btn-primary btn-full" onclick="submitAddUser()">✨ Создать пользователя</button>
+    </div>
+  </div>
+</div>
+
+<div id="profileModal" class="modal-overlay hidden">
+  <div class="modal-backdrop" onclick="closeProfile()"></div>
+  <div class="modal-panel modal-md">
+    <div class="modal-header">
+      <div class="row gap-3">
+        <div id="profileAvatar" class="avatar avatar-md"></div>
+        <div>
+          <h2 class="modal-title">Мой профиль</h2>
+          <p class="modal-subtitle">редактирование аккаунта</p>
+        </div>
+      </div>
+      <button class="btn-close" onclick="closeProfile()">&times;</button>
+    </div>
+    <div class="modal-body stack-xl modal-scroll">
+
+      <div class="stack">
+        <p class="section-label">Основная информация</p>
+        <div>
+          <label class="field-label">Имя</label>
+          <input id="profileName" type="text" class="input input-block">
+        </div>
+        <div>
+          <label class="field-label">Дата рождения</label>
+          <input id="profileBirth" type="date" class="input input-block">
+        </div>
+        <button class="btn-primary btn-full" onclick="saveProfile()">💾 Сохранить изменения</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="stack">
+        <p class="section-label">🎁 Мой вишлист</p>
+        <div class="row-input">
+          <input id="profileNewWish" class="input" placeholder="Добавить подарок..." onkeydown="if(event.key==='Enter') addProfileWish()">
+          <button class="btn-square btn-primary" onclick="addProfileWish()">+</button>
+        </div>
+        <ul id="profileWishlist" class="stack-sm"></ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="storage/db.js"></script>
+<script src="storage/users.js"></script>
+<script src="storage/wishlist.js"></script>
+<script src="storage/groups.js"></script>
+<script src="storage/subscriptions.js"></script>
+<script src="storage/chat.js"></script>
+
+<script src="ui/state.js"></script>
+<script src="ui/utils.js"></script>
+<script src="ui/theme.js"></script>
+<script src="ui/users.js"></script>
+<script src="ui/notifications.js"></script>
+<script src="ui/groups.js"></script>
+<script src="ui/subscriptions.js"></script>
+<script src="ui/wishlist.js"></script>
+<script src="ui/friend-card.js"></script>
+<script src="ui/chat.js"></script>
+<script src="ui/add-user-modal.js"></script>
+<script src="ui/profile-modal.js"></script>
+<script src="ui/sidebar-resize.js"></script>
+<script src="ui/main.js"></script>
+</body>
+</html>

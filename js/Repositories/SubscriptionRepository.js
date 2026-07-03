@@ -4,7 +4,7 @@ class SubscriptionRepository extends BaseRepository {
     }
 
     getUserSubcriptions(id) {
-        return this.getAllRaw().filter(c => c.id === id);
+        return this.getAllRaw().filter(c => c.userId === id);
     }
 
     subscribeToUser(userId, targetUserId) {

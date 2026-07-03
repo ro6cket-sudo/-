@@ -6,7 +6,7 @@ class Storage {
 
     init() {
         if (!localStorage.getItem(this.name)) {
-            const intialData = {user: [], wishlists: [], chats: []};
+            const intialData = {users: [], groups: [], subscriptions: [], wishlists: [], chats: []};
             localStorage.setItem(this.name, JSON.stringify(intialData));
         }
     }

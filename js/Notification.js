@@ -11,7 +11,7 @@ class Notification {
 
         subs.forEach((sub) => {
             if (sub.targetUserId) targetUsersIds.add(sub.targetUserId);
-            if (subs.targetGroupId) {
+            if (sub.targetGroupId) {
                 const group = this.groupRepository.getById(sub.targetGroupId);
                 if (group) group.members.forEach(member => {targetUsersIds.add(member)});
             }
@@ -22,8 +22,8 @@ class Notification {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
-        targetUsersIds.forEach((id) => {
-            const user = this.userRepository.getById(id);
+        targetUsersIds.forEach((targetId) => {
+            const user = this.userRepository.getById(targetId);
             if (!user) return;
              const [y, m, d] = user.birthday.split('-').map(Number);
              let nextBirthday = new Date(today.getFullYear(), m - 1, d)
@@ -35,9 +35,9 @@ class Notification {
              const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
              if (diffDays <= 7) {
-                 upcomingBirthdays.push(nextBirthday);
+                 upcomingBirthdays.push({ user, date: nextBirthday, daysLeft: diffDays });
              }
         })
-        return upcoming.sort((a, b) => a.daysLeft - b.daysLeft);
+        return upcomingBirthdays.sort((a, b) => a.daysLeft - b.daysLeft);
     }
 }

@@ -14,3 +14,6 @@ const currentUserId = Number(localStorage.getItem(CURRENT_USER_KEY));
 const currentUser = userRepository.getById(currentUserId);
 
 renderFriendsList();
+
+const wishlistView = new WishlistView(wishlistRepository);
+wishlistView.render(document.getElementById('myWish'), currentUserId, { editable: true });

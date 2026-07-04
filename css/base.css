@@ -1,15 +1,39 @@
-/* ============ Патимейкер — базовые стили ============ */
+*{box-sizing:
+  border-box}
 
-*{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:var(--text);
+html,body{
+  height:100%
+}
+body
+{margin:0;
+  background:var(--bg);
+  color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",Roboto,sans-serif;
-  -webkit-font-smoothing:antialiased;letter-spacing:-.01em;transition:background-color .3s,color .3s;}
-::-webkit-scrollbar{width:6px;height:6px}
-::-webkit-scrollbar-thumb{background:var(--border-2);border-radius:99px}
-::-webkit-scrollbar-thumb:hover{background:var(--faint)}
-::-webkit-scrollbar-track{background:transparent}
-input,button,select{font-family:inherit;letter-spacing:inherit}
-button{cursor:pointer;color:inherit}
-.hidden{display:none!important}
+  -webkit-font-smoothing:antialiased;letter-spacing:-.01em;transition:background-color .3s,color .3s;
+}
+::-webkit-scrollbar{
+  width:6px;
+  height:6px
+}
+::-webkit-scrollbar-thumb{
+  background:var(--border-2);
+  border-radius:99px
+}
+::-webkit-scrollbar-thumb:hover{
+  background:var(--faint)
+}
+::-webkit-scrollbar-track{
+  background:transparent
+}
+input,button,select{
+  font-family:inherit;
+  letter-spacing:inherit
+}
+button{
+  cursor:pointer;
+  color:inherit
+}
+.hidden{
+  display:none!important
+}
 @keyframes pop{from{opacity:0;transform:translateY(6px) scale(.98)}to{opacity:1;transform:none}}

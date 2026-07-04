@@ -36,7 +36,7 @@ const views = {
     profile: new Profile()
 };
 
-const controller = new Controller(repositories, services, views, window.currentUserId);
+const controller = new Controller(repositories, services, views, currentUserId);
 
 views.sidebar.bindEvents(
     (userId) => controller.selectUser(userId),

@@ -14,7 +14,7 @@ function formatBirthday(birthday) {
     return `${day} ${MONTHS_GENITIVE[month - 1]}`;
 }
 
-function getDaysLet(birthday) {
+function getDaysLeft(birthday) {
     if (!birthday) return null;
     const parts = String(birthday).split('-').map(Number);
     if (parts.length < 3) return null;

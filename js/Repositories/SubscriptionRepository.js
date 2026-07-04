@@ -22,4 +22,20 @@ class SubscriptionRepository extends BaseRepository {
             this.saveAll(subs);
         }
     }
+
+    unsubscribeFromUser(userId, targetUserId) {
+        this.saveAll(this.getAllRaw().filter(s => !(s.userId === userId && s.targetUserId === targetUserId)));
+    }
+
+    unsubscribeFromGroup(userId, targetGroupId) {
+        this.saveAll(this.getAllRaw().filter(s => !(s.userId === userId && s.targetGroupId === targetGroupId)));
+    }
+
+    isSubscribedToUser(userId, targetUserId) {
+        return this.getUserSubcriptions(userId).some(s => s.targetUserId === targetUserId);
+    }
+
+    isSubscribedToGroup(userId, targetGroupId) {
+        return this.getUserSubcriptions(userId).some(s => s.targetGroupId === targetGroupId);
+    }
 }

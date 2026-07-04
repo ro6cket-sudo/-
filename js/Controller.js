@@ -10,26 +10,29 @@ class Controller {
     }
 
     init() {
-        this.views.sidebar.bindEvents(
-            (userId) => this.sele
-        )
+        this.views.main.showEmpty()
+        this.refreshSidebar()
     }
 
     selectUser(userId) {
         this.activeUserId = userId;
+        this.activeGroupId = null;
         this.refreshSidebar();
 
         const user = this.repositories.user.getById(userId);
-        const isSelf = userId === this.currentUserId;
-        const userGroups = this.repositories.group.getByUserId(userId);
-        const wishlist = this.repositories.wishlists.getByUserId(userId);
-        const messages = this.repositories.message.getMessagesForUser(userId);
-        const allUsers = this.repositories.users.getAll()
+        if (!user) return;
 
-        this.views.main.renderCard(user, isSelf, userGroups, wishlist, messages, allUsers);
+        const isSelf = userId === this.currentUserId;
+        const userGroups = this.repositories.group.getAll().filter(g => g.members.includes(userId));
+        const wishlist = this.repositories.wishlist.getByUserId(userId);
+        const messages = this.repositories.chat.getMessagesForUser(userId);
+        const allUsers = this.repositories.user.getAll();
+        const isSubscribed = this.repositories.subscription.isSubscribedToUser(this.currentUserId, userId);
+
+        this.views.main.renderCard(user, isSelf, userGroups, wishlist, messages, allUsers, this.currentUserId, isSubscribed);
     }
 
-    selecrGroup(groupId) {
+    selectGroup(groupId) {
         this.activeGroupId = groupId;
         this.activeUserId = null;
         this.views.main.showEmpty()
@@ -46,19 +49,19 @@ class Controller {
         if (!this.activeGroupId) return
         const group = this.repositories.group.getById(this.activeGroupId);
         if (group.members.includes(this.currentUserId)) {
-            this.repositories.groups.remove(this.activeGroupId, this.currentUserId);
+            this.repositories.group.remove(this.activeGroupId, this.currentUserId);
         } else {
-            this.repositories.groups.join(this.activeGroupId, this.currentUserId);
+            this.repositories.group.join(this.activeGroupId, this.currentUserId);
         }
         this.refreshSidebar();
     }
 
     toggleGroupSubscription() {
         if (!this.activeGroupId) return
-        const subscribes = this.repositories.subscriptions.getUserSubcriptions(this.activeGroupId);
+        const subscribes = this.repositories.subscription.getUserSubcriptions(this.activeGroupId);
         const isSubbed = subscribes.some(s => s.targetGroupId === this.activeGroupId);
         if (!isSubbed) {
-            this.repositories.subscriptions.subscribeToGroup(this.currentUserId, this.activeGroupId);
+            this.repositories.subscription.subscribeToGroup(this.currentUserId, this.activeGroupId);
             this.refreshSidebar();
         }
     }
@@ -72,10 +75,10 @@ class Controller {
         let isSubscribed = false
 
         if (this.activeGroupId) {
-            activeGroup = this.repositories.groups.getById(this.activeGroupId);
+            activeGroup = this.repositories.group.getById(this.activeGroupId);
             users = users.filter(user => activeGroup.members.includes(user.id));
             isMember = activeGroup.members.includes(this.currentUserId);
-            isSubscribed = this.repositories.subscriptions.getUserSubcriptions(this.currentUserId).some(s => s.targetGroupId === this.activeGroupId);
+            isSubscribed = this.repositories.subscription.getUserSubcriptions(this.currentUserId).some(s => s.targetGroupId === this.activeGroupId);
         }
 
         const upcoming = this.services.notification.getUpcomingBirthdays(this.currentUserId)
@@ -86,7 +89,7 @@ class Controller {
 
     refreshProfile(){
         const user = this.repositories.user.getById(this.currentUserId);
-        const wish = this.repositories.wishlists.getByUserId(this.currentUserId)
+        const wish = this.repositories.wishlist.getByUserId(this.currentUserId)
         this.views.profile.render(user, wish)
     }
 }

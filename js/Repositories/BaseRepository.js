@@ -13,7 +13,7 @@ class BaseRepository {
     }
 
     generateId(data) {
-        return data.length ? Math.max(...data.map(i => i.id)) + 1 : 0;
+        return data.length ? Math.max(...data.map(i => i.id)) + 1 : 1;
 
     }
 }

@@ -39,7 +39,7 @@ class Sidebar {
     }
 
     renderRail(groups, activeGroupId){
-        this.railHome.classlist.toggle('active', activeGroupId === null);
+        this.railHome.classList.toggle('active', activeGroupId === null);
         this.railGroups.innerHTML = groups.map(g => `
             <div class="rail-item">
                 ${g.id === activeGroupId ? '<div class="rail-pill"></div>' : ''}

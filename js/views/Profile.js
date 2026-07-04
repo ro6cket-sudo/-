@@ -1,19 +1,15 @@
 class Profile {
     constructor() {
         this.overlay = document.getElementById('overlay');
-        this.wishContainer = document.getElementById('myWish')
+        this.wishContainer = document.getElementById('myWish');
 
         document.querySelectorAll('[data-profile]').forEach(profile => {
-            profile.addEventListener('click', e => {
-                this.open()
-            })
-        })
+            profile.addEventListener('click', e => this.open());
+        });
 
-        document.querySelectorAll('[data-profile]').forEach(profile => {
-            profile.addEventListener('click', e => {
-                this.close()
-            })
-        })
+        document.querySelectorAll('[data-close]').forEach(el => {
+            el.addEventListener('click', e => this.close());
+        });
     }
 
     bindEvents(onAddWish) {

@@ -1,19 +1,51 @@
+document.getElementById('themeBtn').addEventListener('click', (e) => {
+    const root = document.documentElement;
+    const newTheme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = newTheme;
+    localStorage.setItem('pm-theme', newTheme);
+});
+
+window.CURRENT_USER_KEY = 'patimaker-current-user-id';
+
 const storage = new Storage('patimaker');
+const repositories = {
+    user: new UserRepository(storage),
+    group: new GroupRepository(storage),
+    chat: new ChatRepository(storage),
+    subscription: new SubscriptionRepository(storage),
+    wishlist: new WishlistRepository(storage)
+};
 
-const userRepository = new UserRepository(storage);
-const groupRepository = new GroupRepository(storage);
-const chatRepository = new ChatRepository(storage);
-const subscriptionRepository = new SubscriptionRepository(storage);
-const wishlistRepository = new WishlistRepository(storage);
-
-const notification = new Notification(userRepository, groupRepository, subscriptionRepository);
+window.userRepository = repositories.user;
+window.groupRepository = repositories.group;
+window.chatRepository = repositories.chat;
+window.subscriptionRepository = repositories.subscription;
+window.wishlistRepository = repositories.wishlist;
 
 seedData();
 
-const currentUserId = Number(localStorage.getItem(CURRENT_USER_KEY));
-const currentUser = userRepository.getById(currentUserId);
+window.currentUserId = Number(localStorage.getItem(window.CURRENT_USER_KEY));
 
-renderFriendsList();
+const services = {
+    notification: new Notification(repositories.user, repositories.group, repositories.subscription)
+};
 
-const wishlistView = new WishlistView(wishlistRepository);
-wishlistView.render(document.getElementById('myWish'), currentUserId, { editable: true });
+const views = {
+    sidebar: new Sidebar(),
+    main: new MainView(),
+    profile: new Profile()
+};
+
+const controller = new Controller(repositories, services, views, window.currentUserId);
+
+views.sidebar.bindEvents(
+    (userId) => controller.selectUser(userId),
+    (groupId) => controller.selectGroup(groupId),
+    () => controller.toggleGroupMembership(),
+    () => controller.toggleGroupSubscription()
+);
+
+views.main.bindEvents((text) => controller.sendChatMessage(text));
+views.profile.bindEvents((wishText) => controller.addWish(wishText));
+
+controller.init();

@@ -11,18 +11,21 @@ class Sidebar {
 
         this.listBody.addEventListener('click', (event) => {
             const friendButton = event.target.closest('.friend');
-        })
+            if (friendButton && this.onUserSelect) {
+                this.onUserSelect(Number(friendButton.dataset.id));
+            }
+        });
 
         this.railHome.addEventListener('click', () => {
-            this.onGroupSelect(null)
-        })
+            if (this.onGroupSelect) this.onGroupSelect(null);
+        });
 
         this.railGroups.addEventListener('click', (event) => {
-            const button = event.target.closest('.rail-btn-group');
-            if (button) {
+            const button = event.target.closest('.rail-btn.group');
+            if (button && this.onGroupSelect) {
                 this.onGroupSelect(Number(button.dataset.id));
             }
-        })
+        });
 
         this.groupJoinBtn.addEventListener('click', () => this.onGroupJoin());
         this.groupBellBtn.addEventListener('click', () => this.onGroupSubscribe());
